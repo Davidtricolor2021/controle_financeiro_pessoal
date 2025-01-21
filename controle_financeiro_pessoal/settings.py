@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gastos',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirecionar para a página de listagem de despesas após o login
+LOGIN_REDIRECT_URL = '/'
+
+# Após o logout, redirecionar para a página de login
+LOGOUT_REDIRECT_URL = '/login/'

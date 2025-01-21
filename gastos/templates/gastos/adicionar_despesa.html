@@ -1,0 +1,27 @@
+<h1>Adicionar Despesa</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="data_pgto">Data do Pagamento:</label>
+    <input type="date" name="data_pgto" id="data_pgto" required><br>
+
+    <label for="data_compra">Data da Compra:</label>
+    <input type="date" name="data_compra" id="data_compra" required><br>
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" name="descricao" id="descricao" required><br>
+
+    <label for="valor">Valor:</label>
+    <input type="number" name="valor" step="0.01" id="valor" required><br>
+
+    <label for="categoria">Categoria:</label>
+    <select name="categoria" id="categoria" required>
+        {% for categoria in categorias %}
+        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="parcelas">Número de Parcelas:</label>
+    <input type="number" name="parcelas" id="parcelas" min="1" value="1" required><br>
+    
+    <button type="submit">Salvar</button>
+</form>

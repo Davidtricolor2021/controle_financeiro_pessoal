@@ -1,0 +1,24 @@
+<h1>Suas Despesas</h1>
+<a href="{% url 'adicionar_despesa' %}">Adicionar Despesa</a>
+<table>
+    <thead>
+        <tr>
+            <th>Data Pagamento</th>
+            <th>Data Compra</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Categoria</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for despesa in despesas %}
+        <tr>
+            <td>{{ despesa.data_pgto }}</td>
+            <td>{{ despesa.data_compra }}</td>
+            <td>{{ despesa.descricao }}</td>
+            <td>R$ {{ despesa.valor }}</td>
+            <td>{{ despesa.categoria.nome }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
