@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>{% block title %}Sistema de Controle Financeiro Pessoal{% endblock %}</title>
+
+    <!-- CSS Personalizado para as abas -->
+    <style>
+        /* Ajustando a cor do texto nas abas */
+        .nav-tabs .nav-link {
+            color: #000000; /* Cor do texto das abas inativas */
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #ffffff; /* Cor do texto da aba ativa */
+            background-color: #007bff; /* Cor de fundo da aba ativa */
+        }
+
+        /* Alterando a cor da aba ativa */
+        .nav-tabs .nav-item .nav-link.active {
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'listar_despesas' %}">Sistema de Controle Financeiro Pessoal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'listar_despesas' %}">Listar Despesas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'adicionar_despesa' %}">Adicionar Despesa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="{% url 'logout' %}">Sair</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Entrar</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

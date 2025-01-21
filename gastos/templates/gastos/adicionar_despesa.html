@@ -1,3 +1,9 @@
+{% extends "gastos/base.html" %}
+
+{% block title %}Adicionar Despesa{% endblock %}
+
+{% block content %}
+
 <h1>Adicionar Despesa</h1>
 <form method="post">
     {% csrf_token %}
@@ -22,6 +28,7 @@
 
     <label for="parcelas">Número de Parcelas:</label>
     <input type="number" name="parcelas" id="parcelas" min="1" value="1" required><br>
-    
-    <button type="submit">Salvar</button>
+
+    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
 </form>
+{% endblock %}

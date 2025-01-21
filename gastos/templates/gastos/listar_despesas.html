@@ -1,24 +1,65 @@
-<h1>Suas Despesas</h1>
-<a href="{% url 'adicionar_despesa' %}">Adicionar Despesa</a>
-<table>
-    <thead>
-        <tr>
-            <th>Data Pagamento</th>
-            <th>Data Compra</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Categoria</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for despesa in despesas %}
-        <tr>
-            <td>{{ despesa.data_pgto }}</td>
-            <td>{{ despesa.data_compra }}</td>
-            <td>{{ despesa.descricao }}</td>
-            <td>R$ {{ despesa.valor }}</td>
-            <td>{{ despesa.categoria.nome }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% extends "gastos/base.html" %}
+
+{% block title %}Suas Despesas{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Suas Despesas</h1>
+
+<!-- Abas -->
+<ul class="nav nav-tabs" id="mesTabs" role="tablist">
+    {% for mes, despesas in despesas_por_mes.items %}
+    <li class="nav-item" role="presentation">
+        <button 
+            class="nav-link {% if forloop.first %}active{% endif %}" 
+            id="tab-{{ mes }}" 
+            data-bs-toggle="tab" 
+            data-bs-target="#content-{{ mes }}" 
+            type="button" 
+            role="tab" 
+            aria-controls="content-{{ mes }}" 
+            aria-selected="{{ forloop.first }}">
+            {{ mes }} 
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Conteúdo das abas -->
+<div class="tab-content mt-3" id="mesTabsContent">
+    {% for mes, despesas in despesas_por_mes.items %}
+    <div 
+        class="tab-pane fade {% if forloop.first %}show active{% endif %}" 
+        id="content-{{ mes }}" 
+        role="tabpanel" 
+        aria-labelledby="tab-{{ mes }}">
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data Pagamento</th>
+                    <th>Data Compra</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Categoria</th>
+                    <th>Parcela Atual</th>
+                    <th>Total Parcelas</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for despesa in despesas %}
+                <tr>
+                    <td>{{ despesa.data_pgto }}</td>
+                    <td>{{ despesa.data_compra }}</td>
+                    <td>{{ despesa.descricao }}</td>                    
+                    <td>R$ {{ despesa.valor }}</td>
+                    <td>{{ despesa.categoria.nome }}</td>
+                    <td>{{ despesa.parcela_atual }}</td>
+                    <td>{{ despesa.parcelas }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
