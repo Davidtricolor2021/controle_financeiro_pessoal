@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Despesa, Categoria
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 from django.db.models.functions import TruncMonth
 from django.db.models import Sum
@@ -74,15 +75,18 @@ def adicionar_despesa(request):
         # Cria as despesas para cada parcela
         for i in range(parcelas):
             # Ajusta a data de pagamento para os meses seguintes
-            nova_data_pgto = data_pgto_obj + timedelta(days=i * calendar.monthrange(data_pgto_obj.year, data_pgto_obj.month)[1])
+            nova_data_pgto = data_pgto_obj + relativedelta(months=i)
 
         # Cria a despesa
             Despesa.objects.create(
                 data_pgto=nova_data_pgto,
                 data_compra=data_compra_obj,
-                descricao=f"{descricao} (Parcela {i + 1}/{parcelas})",
+                descricao=descricao,
+                #descricao=f"{descricao} (Parcela {i + 1}/{parcelas})",
                 valor=round(valor_parcela, 2),
                 categoria=categoria,
+                parcela_atual=f"{i + 1}",
+                parcelas=parcelas,
                 usuario=request.user
             )
 
